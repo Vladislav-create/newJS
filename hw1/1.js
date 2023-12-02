@@ -15,3 +15,44 @@
 вывода их в консоль в формате:
 "Название альбома - Исполнитель (Год выпуска)"
 */
+
+const firstCollection = [ 
+  {
+  title: "Название альбома 1",
+  artist: "Исполнитель 1",
+  year: "Год выпуска 1"
+  },
+  {
+    title: "Название альбома 2",
+    artist: "Исполнитель 2",
+    year: "Год выпуска 2"
+  },
+  {
+    title: "Название альбома 3",
+    artist: "Исполнитель 3",
+    year: "Год выпуска 3"
+  },
+  {
+    title: "Название альбома 4",
+    artist: "Исполнитель 4",
+    year: "Год выпуска 4"
+  },
+  {
+    title: "Название альбома 5",
+    artist: "Исполнитель 5",
+    year: "Год выпуска 5"
+  }
+]
+
+const collections = {
+  firstCollection,
+  *[Symbol.iterator](){
+    for (let i = 0; i < this.firstCollection.length; i++) {
+        yield this.firstCollection[i]
+    }
+  }
+}
+
+for (const collection of collections) {
+  console.log(`${collection.title} - ${collection.artist}(${collection.year})`);
+}

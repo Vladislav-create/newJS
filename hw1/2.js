@@ -24,6 +24,12 @@
 Десерт Тирамису
 Десерт Чизкейк
 */
+//Коллекция с поварами и их специализация
+let chefsMap = new Map();
+chefsMap.set('Пицца', 'Олег')
+        .set('Суши', 'Андрей')  
+        .set('Десерты', 'Анна')
+
 
 // Посетитель ресторана.
 class Client {
@@ -35,7 +41,18 @@ class Client {
 
 // Вам необходимо реализовать класс, который управляет заказами и поварами.
 class Manager {
-
+  constructor() {
+  }
+  newOrder(param1, param2) {
+    let cook = ''
+    let client = param1
+    let order = param2
+    console.log(client);
+    console.log(typeof client);
+    console.log(order);
+    console.log(typeof order);
+    console.log(`Клиент ${client.firstname} заказал:\n${order.type} "${order.name}" - ${order.quantity}`);
+  }
 }
 
 // Можно передать внутрь конструктора что-либо, если необходимо.
@@ -56,32 +73,32 @@ manager.newOrder(
 
 // ---
 
-const clientPavel = new Client("Павел", "Павлов");
-manager.newOrder(
-  clientPavel, 
-  { name: "Филадельфия", quantity: 5, type: "Суши" },
-  { name: "Калифорния", quantity: 3, type: "Суши" },
-);
+// const clientPavel = new Client("Павел", "Павлов");
+// manager.newOrder(
+//   clientPavel, 
+//   { name: "Филадельфия", quantity: 5, type: "Суши" },
+//   { name: "Калифорния", quantity: 3, type: "Суши" },
+// );
 // Вывод:
 // Клиент Павел заказал: 
 // Суши "Филадельфия" - 5; готовит повар Андрей
 // Суши "Калифорния" - 3; готовит повар Андрей
 
-manager.newOrder(
-  clientPavel, 
-  { name: "Калифорния", quantity: 1, type: "Суши" },
-  { name: "Тирамису", quantity: 2, type: "Десерт" },
-);
+// manager.newOrder(
+//   clientPavel, 
+//   { name: "Калифорния", quantity: 1, type: "Суши" },
+//   { name: "Тирамису", quantity: 2, type: "Десерт" },
+// );
 // Вывод:
 // Клиент Павел заказал: 
 // Суши "Филадельфия" - 5; готовит повар Андрей
 // Суши "Калифорния" - 4; готовит повар Андрей
 // Десерт "Тирамису" - 2; готовит повар Анна
 
-manager.newOrder(
-  clientPavel, 
-  { name: "Филадельфия", quantity: 1, type: "Суши" },
-  { name: "Трубочка с вареной сгущенкой", quantity: 1, type: "Десерт" },
-);
+// manager.newOrder(
+//   clientPavel, 
+//   { name: "Филадельфия", quantity: 1, type: "Суши" },
+//   { name: "Трубочка с вареной сгущенкой", quantity: 1, type: "Десерт" },
+// );
 // Ничего не должно быть добавлено, должна быть выброшена ошибка:
 // Десерт "Трубочка с вареной сгущенкой" - такого блюда не существует.
