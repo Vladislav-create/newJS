@@ -28,8 +28,11 @@
 let chefsMap = new Map();
 chefsMap.set('Пицца', 'Олег')
         .set('Суши', 'Андрей')  
-        .set('Десерты', 'Анна')
-
+        .set('Десерт', 'Анна')
+//мапа для хранения заказов
+let ordersMap = new Map();
+// Меню
+let menu = ["Маргарита", "Пепперони", "Три сыра", "Филадельфия", "Калифорния", "Чизмаки", "Сеякемаки", "Тирамису", "Чизкейк"]
 
 // Посетитель ресторана.
 class Client {
@@ -43,15 +46,35 @@ class Client {
 class Manager {
   constructor() {
   }
-  newOrder(param1, param2) {
-    let cook = ''
-    let client = param1
-    let order = param2
-    console.log(client);
-    console.log(typeof client);
-    console.log(order);
-    console.log(typeof order);
-    console.log(`Клиент ${client.firstname} заказал:\n${order.type} "${order.name}" - ${order.quantity}`);
+  newOrder(param1, ...param2) {
+    try {
+      for (const iterator of param2) {
+        if (!menu.includes(iterator.name)) {
+          throw new SyntaxError('Десерт "Трубочка с вареной сгущенкой" - такого блюда не существует.')
+        }
+      }
+
+      if (!ordersMap.has(param1)) {
+        ordersMap.set(param1, param2)
+        //если в мапе уже есть такой заказ
+      } else if (ordersMap.has(param1)) { 
+          let resultOrder = []
+          resultOrder = ordersMap.get(param1)
+          let nextOrder = param2
+          for (const newItem of nextOrder) {
+            if (resultOrder.find(item => item.name === newItem.name)) {
+              resultOrder.find(item => item.name === newItem.name).quantity += newItem.quantity 
+            } else {
+              if (menu.find(item => item === newItem.name)) {
+                resultOrder.push(newItem)
+              }
+            }
+          }
+          ordersMap.set(param1, resultOrder)
+      }
+    } catch (error) {
+      console.log(error.message);
+    } 
   }
 }
 
@@ -73,32 +96,44 @@ manager.newOrder(
 
 // ---
 
-// const clientPavel = new Client("Павел", "Павлов");
-// manager.newOrder(
-//   clientPavel, 
-//   { name: "Филадельфия", quantity: 5, type: "Суши" },
-//   { name: "Калифорния", quantity: 3, type: "Суши" },
-// );
+const clientPavel = new Client("Павел", "Павлов");
+
+manager.newOrder(
+  clientPavel, 
+  { name: "Филадельфия", quantity: 5, type: "Суши" },
+  { name: "Калифорния", quantity: 3, type: "Суши" },
+);
 // Вывод:
 // Клиент Павел заказал: 
 // Суши "Филадельфия" - 5; готовит повар Андрей
 // Суши "Калифорния" - 3; готовит повар Андрей
 
-// manager.newOrder(
-//   clientPavel, 
-//   { name: "Калифорния", quantity: 1, type: "Суши" },
-//   { name: "Тирамису", quantity: 2, type: "Десерт" },
-// );
+manager.newOrder(
+  clientPavel, 
+  { name: "Калифорния", quantity: 1, type: "Суши" },
+  { name: "Тирамису", quantity: 2, type: "Десерт" },
+);
+
+
 // Вывод:
 // Клиент Павел заказал: 
 // Суши "Филадельфия" - 5; готовит повар Андрей
 // Суши "Калифорния" - 4; готовит повар Андрей
 // Десерт "Тирамису" - 2; готовит повар Анна
 
-// manager.newOrder(
-//   clientPavel, 
-//   { name: "Филадельфия", quantity: 1, type: "Суши" },
-//   { name: "Трубочка с вареной сгущенкой", quantity: 1, type: "Десерт" },
-// );
+manager.newOrder(
+  clientPavel, 
+  { name: "Филадельфия", quantity: 1, type: "Суши" },
+  { name: "Трубочка с вареной сгущенкой", quantity: 1, type: "Десерт" },
+);
 // Ничего не должно быть добавлено, должна быть выброшена ошибка:
 // Десерт "Трубочка с вареной сгущенкой" - такого блюда не существует.
+
+let clients = ordersMap.keys();
+for (const client of clients) {
+  console.log(`Клиент ${client.firstname} заказал:`);
+  let clientOrder = ordersMap.get(client)
+  for (const item of clientOrder) {
+    console.log(`${item.type} "${item.name}" - ${item.quantity}; готовит повар ${chefsMap.get(item.type)}`);
+  }
+}
