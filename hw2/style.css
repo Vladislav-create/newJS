@@ -1,0 +1,17 @@
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 90px;
+}
+
+.block {
+  max-width: 360px;
+}
+.block__comment {
+  min-height: 30px;
+}
+.block__reviews__width {
+  max-width: 360px;
+}/*# sourceMappingURL=style.css.map */
