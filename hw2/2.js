@@ -112,7 +112,8 @@ function showComments(data) {
 showComments(initialData);
 
 function addComment(e) {
-  const message = "Комментарий неподходящей длины! Должен быть от 50 до 500 символов";
+  const message =
+    "Комментарий неподходящей длины! Должен быть от 50 до 500 символов";
   const obj = {};
   if (e.target.value === "iPhone") {
     const newComment = new Review();
@@ -122,9 +123,7 @@ function addComment(e) {
       inputElemIPhone.value.length < 50 ||
       inputElemIPhone.value.length > 500
     ) {
-      throw new Error(
-        message
-      );
+      throw new Error(message);
     }
     obj.product = "Apple iPhone 13";
     obj.reviews = [newComment];
@@ -137,9 +136,7 @@ function addComment(e) {
       inputElemGalaxy.value.length < 50 ||
       inputElemGalaxy.value.length > 500
     ) {
-      throw new Error(
-        message
-      );
+      throw new Error(message);
     }
     obj.product = "Samsung Galaxy Z Fold 3";
     obj.reviews = [newComment];
@@ -152,9 +149,7 @@ function addComment(e) {
       inputElemPlayStation.value.length < 50 ||
       inputElemPlayStation.value.length > 500
     ) {
-      throw new Error(
-        message
-      );
+      throw new Error(message);
     }
     obj.product = "Sony PlayStation 5";
     obj.reviews = [newComment];
